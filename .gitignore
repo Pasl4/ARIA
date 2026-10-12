@@ -1,0 +1,41 @@
+# Credentials: copy aria_secrets.example.yaml to aria_secrets.yaml
+aria_secrets.yaml
+*secrets*.yaml
+!aria_secrets.example.yaml
+.env
+.env.*
+.envrc
+*.pem
+*.key
+*credentials*.json
+
+# Environments
+.venv/
+venv/
+
+# Python caches and build output
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+build/
+dist/
+*.egg-info/
+
+# Coverage
+.coverage
+.coverage.*
+htmlcov/
+
+# OS and editor files
+.DS_Store
+._*
+.idea/
+.vscode/
+
+# Run outputs and logs at the repo root (default results and policy store paths).
+# Anchored so src/aria/artifacts and tests/artifacts stay tracked.
+/results/
+/artifacts/
+/logs/

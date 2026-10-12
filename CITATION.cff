@@ -1,0 +1,41 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "ARIA: Ask Your Advisor"
+authors:
+  - family-names: Sowietzki
+    given-names: Pascal
+version: 0.1.0
+date-released: 2026-10-09
+license: MIT
+repository-code: "https://github.com/Pasl4/ARIA"
+keywords:
+  - llm agents
+  - multi-agent systems
+  - advisor models
+  - meta-controller
+  - reinforcement learning
+  - autogen
+preferred-citation:
+  type: article
+  title: "Ask Your Advisor: Learning When to Consult Stronger Models in Agentic Systems"
+  authors:
+    - family-names: Sowietzki
+      given-names: Pascal
+    - family-names: Holter
+      given-names: Steffen
+    - family-names: Metz
+      given-names: Yannick
+    - family-names: Kasper
+      given-names: Emil
+    - family-names: Baur
+      given-names: Raphael
+    - family-names: El-Assady
+      given-names: Mennatallah
+  journal: "arXiv preprint arXiv:2610.13870"
+  year: 2026
+  url: "https://arxiv.org/abs/2610.13870"
+  identifiers:
+    - type: url
+      value: "https://arxiv.org/abs/2610.13870"
+      description: "arXiv abstract page"

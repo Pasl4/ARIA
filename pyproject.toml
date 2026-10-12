@@ -1,0 +1,107 @@
+[project]
+name = "aria"
+# Single source: __version__ in src/aria/__init__.py.
+dynamic = ["version"]
+description = "Learned meta-controller that decides when a low-cost executor model should consult a stronger advisor model during multi-step agentic tasks, built on AutoGen."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md"]
+authors = [{ name = "Pascal Sowietzki" }]
+keywords = [
+    "llm",
+    "agents",
+    "multi-agent",
+    "autogen",
+    "advisor",
+    "meta-controller",
+    "reinforcement-learning",
+    "monte-carlo",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Typing :: Typed",
+]
+dependencies = [
+    # Exact pin: frameworks/autogen/team.py mirrors private 0.7.5 orchestrator methods.
+    "autogen-agentchat==0.7.5",
+    "autogen-core==0.7.5",
+    "autogen-ext[openai]==0.7.5",
+    "numpy>=1.26",
+    "openai>=1.93,<4",
+    "pydantic>=2.7",
+    "pyyaml>=6.0",
+    "rich>=13.7",
+    "typer>=0.12",
+]
+
+[project.urls]
+Paper = "https://arxiv.org/abs/2610.13870"
+Repository = "https://github.com/Pasl4/ARIA"
+Issues = "https://github.com/Pasl4/ARIA/issues"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+    # Capped below the next minor: new releases add lint and type rules,
+    # which would turn CI red with no code change.
+    "ruff>=0.6,<0.17",
+    "pyright>=1.1.380,<1.2",
+]
+
+[project.scripts]
+aria-train = "aria.cli.train:app"
+aria-eval = "aria.cli.evaluate:app"
+aria-run = "aria.cli.run:app"
+aria-policy = "aria.cli.policy:app"
+aria-preflight = "aria.cli.preflight:app"
+
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+path = "src/aria/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/aria"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "UP", "B", "ERA", "FIX"]
+# Style-only rules the codebase does not follow; correctness rules stay on.
+ignore = ["UP031", "B905", "E501", "E701", "E702", "E731", "E741", "B007", "UP032", "UP037"]
+
+[tool.ruff.lint.per-file-ignores]
+# typer's declarative CLI style requires calls in argument defaults
+"src/aria/cli/*" = ["B008"]
+# ContactPointDetector.reset is an intentional no-op default, not abstract
+"src/aria/detectors/base.py" = ["B027"]
+
+[tool.pyright]
+include = ["src"]
+# Check against the oldest supported Python, so newer-only stdlib use is caught.
+pythonVersion = "3.11"
+venvPath = "."
+venv = ".venv"
+typeCheckingMode = "standard"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+# AutoGen warns on every LocalCommandLineCodeExecutor; the README's Security
+# section covers it, and the noise hides real warnings.
+filterwarnings = ["ignore:Using LocalCommandLineCodeExecutor:UserWarning"]
